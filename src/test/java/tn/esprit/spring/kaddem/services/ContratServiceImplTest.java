@@ -49,4 +49,21 @@ class ContratServiceImplTest {
         assertEquals(contratToAdd, addedContrat);
     }
 
+    @Test
+    @Order(3)
+    public void testRetrieveContrat() {
+        Specialite IA = Specialite.IA;
+        Contrat expectedContrat = new Contrat(new Date(), new Date(), IA, false, 1);
+
+        expectedContrat.setIdContrat(1);
+
+        when(contratRepository.findById(1)).thenReturn(Optional.of(expectedContrat));
+        Contrat retrievedContrat = contratService.retrieveContrat(1);
+
+        verify(contratRepository, times(1)).findById(1);
+
+        assertNotNull(retrievedContrat);
+        assertEquals(expectedContrat, retrievedContrat);
+    }
+
 }
