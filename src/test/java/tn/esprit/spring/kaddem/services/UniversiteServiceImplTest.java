@@ -29,7 +29,7 @@ public class UniversiteServiceImplTest {
 
     public void testRetrieveUniversiteTest() {
 
-       Universite universite = new Universite(1, "100");
+       Universite universite = new Universite(1, "Université1");
 
         universite.setIdUniv(1);
 
