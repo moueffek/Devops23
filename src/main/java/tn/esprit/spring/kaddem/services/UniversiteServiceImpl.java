@@ -31,7 +31,7 @@ return  (universiteRepository.save(u));
      return  (universiteRepository.save(u));
     }
 
-  public Universite retrieveUniversite (Integer idUniversite){
+  public  Universite retrieveUniversite(Integer idUniversite){
 Universite u = universiteRepository.findById(idUniversite).get();
 return  u;
     }
