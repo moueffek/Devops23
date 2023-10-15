@@ -3,17 +3,15 @@ package tn.esprit.spring.kaddem.services;
 import org.junit.jupiter.api.*;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import tn.esprit.spring.kaddem.entities.Contrat;
 import tn.esprit.spring.kaddem.entities.Specialite;
 import tn.esprit.spring.kaddem.repositories.ContratRepository;
-import tn.esprit.spring.kaddem.repositories.EtudiantRepository;
 
 import java.util.Date;
-import java.util.List;
 import java.util.Optional;
-
+import static org.mockito.Mockito.*;
+import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.when;
 
 @SpringBootTest
@@ -38,6 +36,17 @@ class ContratServiceImplTest {
 
         contratService.retrieveContrat(1);
         Assertions.assertNotNull(contrat);
+    }
+    @Test
+    @Order(2)
+    public void testAddContrat() {
+        Specialite IA = Specialite.IA;
+        Contrat contratToAdd = new Contrat(new Date(), new Date(), IA, false, 1);
+        when(contratRepository.save(contratToAdd)).thenReturn(contratToAdd);
+        Contrat addedContrat = contratService.addContrat(contratToAdd);
+        verify(contratRepository, times(1)).save(contratToAdd);
+        assertNotNull(addedContrat);
+        assertEquals(contratToAdd, addedContrat);
     }
 
 }
