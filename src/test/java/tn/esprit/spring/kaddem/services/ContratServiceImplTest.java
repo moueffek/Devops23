@@ -10,7 +10,9 @@ import tn.esprit.spring.kaddem.entities.Specialite;
 import tn.esprit.spring.kaddem.repositories.ContratRepository;
 import tn.esprit.spring.kaddem.repositories.EtudiantRepository;
 
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 import java.util.Optional;
 import static org.mockito.Mockito.*;
 import static org.junit.jupiter.api.Assertions.*;
@@ -90,9 +92,53 @@ class ContratServiceImplTest {
     }
 
 
+    @Test
+    @Order(5)
+    public void testGetChiffreAffaireEntreDeuxDates() {
+        Date startDate = new Date();
+        Date endDate = new Date();
 
- /*   @Test
-    @Order(4)
+        Specialite iaSpecialite = Specialite.IA;
+        Specialite cloudSpecialite = Specialite.CLOUD;
+        Specialite reseauxSpecialite = Specialite.RESEAUX;
+        Specialite securiteSpecialite = Specialite.SECURITE;
+
+        List<Contrat> contrats = new ArrayList<>();
+
+        contrats.add(new Contrat(startDate, endDate, iaSpecialite, false, 1));
+        contrats.add(new Contrat(startDate, endDate, cloudSpecialite, false, 2));
+        contrats.add(new Contrat(startDate, endDate, reseauxSpecialite, false, 3));
+        contrats.add(new Contrat(startDate, endDate, securiteSpecialite, false, 4));
+
+        when(contratRepository.findAll()).thenReturn(contrats);
+
+        float expectedChiffreAffaire = 0;
+        float difference_In_Time = endDate.getTime() - startDate.getTime();
+        float difference_In_Days = (difference_In_Time / (1000 * 60 * 60 * 24)) % 365;
+        float difference_In_months = difference_In_Days / 30;
+
+        for (Contrat contrat : contrats) {
+            if (contrat.getSpecialite() == Specialite.IA) {
+                expectedChiffreAffaire += (difference_In_months * 300);
+            } else if (contrat.getSpecialite() == Specialite.CLOUD) {
+                expectedChiffreAffaire += (difference_In_months * 400);
+            } else if (contrat.getSpecialite() == Specialite.RESEAUX) {
+                expectedChiffreAffaire += (difference_In_months * 350);
+            } else {
+                expectedChiffreAffaire += (difference_In_months * 450);
+            }
+        }
+
+        float actualChiffreAffaire = contratService.getChiffreAffaireEntreDeuxDates(startDate, endDate);
+
+        verify(contratRepository, times(1)).findAll();
+
+        assertEquals(expectedChiffreAffaire, actualChiffreAffaire, 0.001);
+    }
+
+ /*  Failure check out later
+    @Test
+    @Order(6)
     public void testAffectContratToEtudiant() {
         Specialite IA = Specialite.IA;
         Contrat contrat = new Contrat(new Date(), new Date(), IA, false, 1);
