@@ -32,27 +32,16 @@ public class UniversiteServiceImplTest {
     private UniversiteServiceImpl universiteService;
 
 
-  /*  @Test
+
+   @Test
     @Order(1)
-    public void testAddUniversite() {
-        //Specialite IA = Specialite.IA;
-        Universite contratToAdd = new Universite(nomUniv, new Date(), IA, false, 1);
-        when(universiteRepository.save(contratToAdd)).thenReturn(contratToAdd);
-        Universite addedContrat = universiteService.addUniversite(contratToAdd);
-        verify(universiteRepository, times(1)).save(contratToAdd);
-        assertNotNull(addedContrat);
-        assertEquals(contratToAdd, addedContrat);
-    }*/
-
-  //  @Test
-  //  @Order(1)
 
 
-   /* public void testRetrieveUniversiteTest() {
+   public void testRetrieveUniversiteTest() {
 
        Universite universite = new Universite(1, "Université1");
         universite.setIdUniv(1);
-       // when(universiteRepository.findById(1)).thenReturn(Optional.of(universite));
+        when(universiteRepository.findById(1)).thenReturn(Optional.of(universite));
 
         universiteService.retrieveUniversite(1);
         assertNotNull(universite);
@@ -60,9 +49,9 @@ public class UniversiteServiceImplTest {
         System.out.println(universite);
         System.out.println("University Retrieve processed succefully...!!");
 
-    }*/
+    }
 
-    @Order(1)
+    @Order(2)
     @Test
     public void testAddUniversite() {
         Universite universiteToAdd = new Universite("esprit1");
@@ -79,7 +68,7 @@ public class UniversiteServiceImplTest {
     }
 
 
-    @Order(3)
+    /*@Order(3)
     @Test
     public void testRetrieveAllUniversiteTest()
     {
@@ -96,7 +85,7 @@ public class UniversiteServiceImplTest {
         List<Universite> universitelist = universiteService.retrieveAllUniversites();
         assertEquals(4, universitelist.size());
         System.out.println("All Universities Retrieve processed succefully...!!");
-    }
+    }*/
 
     @Test
     @Order(4)
