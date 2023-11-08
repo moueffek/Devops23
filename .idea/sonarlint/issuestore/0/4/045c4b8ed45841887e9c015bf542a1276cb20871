@@ -1,0 +1,19 @@
+
+f	java:S117K"QRename this local variable to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(×ˆ¾­
+k	java:S117L"QRename this local variable to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(œä÷óúÿÿÿÿ
+k	java:S117Z"QRename this local variable to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(ïù»”üÿÿÿÿ
+k	java:S117["QRename this local variable to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(±‡Ìúÿÿÿÿ
+k	java:S117\"QRename this local variable to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(ö§”ƒúÿÿÿÿ
+>
+java:S5411J"(Use a primitive boolean expression here.(ÆÇÉ²
+_
+java:S2184Z"DCast one of the operands of this subtraction operation to a "float".(ïù»”üÿÿÿÿ
+=
+java:S1905"'Remove this unnecessary cast to "List".(ìÂ‘¬
+Y
+java:S11554">Use isEmpty() to check whether the collection is empty or not.(³òğÉùÿÿÿÿ
+=
+java:S11256"'Remove the unnecessary boolean literal.(•ªÉÓ
+=
+java:S1125J"'Remove the unnecessary boolean literal.(ÆÇÉ²
+V	java:S125h"<This block of commented-out lines of code should be removed.(…ÂĞÇûÿÿÿÿ

@@ -1,0 +1,11 @@
+
+Z
+java:S2259?"?A "NullPointerException" could be thrown; "c" is nullable here.(ÄëÖ’øÿÿÿÿ
+[
+java:S2259@"@A "NullPointerException" could be thrown; "eq" is nullable here.(“³›üûÿÿÿÿ
+\
+java:S22598"FA "NullPointerException" could be thrown; "etudiant" is nullable here.(À÷Òˆ
+R
+java:S3655-"7Call "Optional#isPresent()" before accessing the value.(Ö²Ð”ýÿÿÿÿ
+E
+java:S1128"*Remove this unused import 'java.util.Set'.(ö²„¤þÿÿÿÿ
