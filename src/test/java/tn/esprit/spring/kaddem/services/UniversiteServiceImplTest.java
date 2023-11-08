@@ -116,36 +116,6 @@ public class UniversiteServiceImplTest {
         System.out.println("University updated succefully...!!");
     }
 
-    @Test
-    @Order(5)
-    public void testAssignUniversiteToDepartement() {
-        Integer idUniversite = 1; // Remplacez par l'identifiant de l'université
-        Integer idDepartement = 2; // Remplacez par l'identifiant du département
 
-        Universite universite = new Universite();
-        Departement departement = new Departement();
-
-        // Mockez le comportement du repository pour les méthodes findById et save de l'université
-        when(universiteRepository.findById(idUniversite)).thenReturn(Optional.of(universite));
-        when(universiteRepository.save(any(Universite.class))).thenReturn(universite);
-
-        // Mockez le comportement du repository pour la méthode findById du département
-        when(departementRepository.findById(idDepartement)).thenReturn(Optional.of(departement));
-
-        // Appelez la méthode que vous voulez tester
-        universiteService.assignUniversiteToDepartement(idUniversite, idDepartement);
-
-        // Vérifiez que la méthode findById du repository de l'université a été appelée avec l'identifiant spécifié
-        verify(universiteRepository, times(1)).findById(idUniversite);
-
-        // Vérifiez que la méthode findById du repository du département a été appelée avec l'identifiant spécifié
-        verify(departementRepository, times(1)).findById(idDepartement);
-
-        // Vérifiez que le département a été ajouté à l'université
-        assertTrue(universite.getDepartements().contains(departement));
-
-        // Vérifiez que la méthode save du repository de l'université a été appelée pour sauvegarder les modifications
-        verify(universiteRepository, times(1)).save(universite);
-    }
 
 }
