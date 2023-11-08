@@ -33,7 +33,7 @@ public class UniversiteServiceImplTest {
 
 
 
-   @Test
+   /*@Test
     @Order(1)
 
 
@@ -50,7 +50,7 @@ public class UniversiteServiceImplTest {
         System.out.println("University Retrieve processed succefully...!!");
 
     }
-
+*/
     @Order(2)
     @Test
     public void testAddUniversite() {
@@ -68,7 +68,20 @@ public class UniversiteServiceImplTest {
     }
 
 
-    /*@Order(3)
+    @Test
+    @Order(1)
+    public void testRetrieveUniversiteTest() {
+        Universite universite = new Universite(1, "Université1");
+        when(universiteRepository.findById(1)).thenReturn(Optional.of(universite));
+
+        Universite retrievedUniversite = universiteService.retrieveUniversite(1);
+
+        assertNotNull(retrievedUniversite);
+        assertEquals(universite, retrievedUniversite);
+    }
+
+
+    @Order(3)
     @Test
     public void testRetrieveAllUniversiteTest()
     {
@@ -85,7 +98,7 @@ public class UniversiteServiceImplTest {
         List<Universite> universitelist = universiteService.retrieveAllUniversites();
         assertEquals(4, universitelist.size());
         System.out.println("All Universities Retrieve processed succefully...!!");
-    }*/
+    }
 
     @Test
     @Order(4)
