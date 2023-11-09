@@ -33,10 +33,8 @@ public class UniversiteServiceImplTest {
 
 
 
-   /*@Test
+   @Test
     @Order(1)
-
-
    public void testRetrieveUniversiteTest() {
 
        Universite universite = new Universite(1, "Université1");
@@ -50,9 +48,9 @@ public class UniversiteServiceImplTest {
         System.out.println("University Retrieve processed succefully...!!");
 
     }
-*/
-   // @Order(2)
-   // @Test
+
+    @Order(2)
+    @Test
     public void testAddUniversite() {
         Universite universiteToAdd = new Universite("esprit1");
         when(universiteRepository.save(universiteToAdd)).thenReturn(universiteToAdd);
@@ -68,8 +66,8 @@ public class UniversiteServiceImplTest {
     }
 
 
-  //  @Test
-   // @Order(1)
+  /*  @Test
+    @Order(1)
     public void testRetrieveUniversiteTest() {
         Universite universite = new Universite(1, "Université1");
         when(universiteRepository.findById(1)).thenReturn(Optional.of(universite));
@@ -79,10 +77,10 @@ public class UniversiteServiceImplTest {
         assertNotNull(retrievedUniversite);
         assertEquals(universite, retrievedUniversite);
     }
+*/
 
-
-    //@Order(3)
-    //@Test
+    @Order(3)
+    @Test
     public void testRetrieveAllUniversiteTest()
     {
         List<Universite> Universitelist = new ArrayList<Universite>() {
@@ -100,11 +98,11 @@ public class UniversiteServiceImplTest {
         System.out.println("All Universities Retrieve processed succefully...!!");
     }
 
-  //  @Test
-  //  @Order(4)
+    @Test
+    @Order(4)
     public void testUpdateUniversite() {
 
-        Universite universiteToUpdate = new Universite(1, "central"); // Remplacez par les valeurs appropriées
+        Universite universiteToUpdate = new Universite(1, "central");
 
         when(universiteRepository.save(universiteToUpdate)).thenReturn(universiteToUpdate);
 
