@@ -10,7 +10,7 @@
     </parent>
     <groupId>tn.esprit.spring</groupId>
     <artifactId>kaddem</artifactId>
-    <version>0.0.1-SNAPSHOT</version>
+    <version>1.0.0</version>
     <name>kaddem</name>
     <description>kaddem</description>
     <properties>
@@ -96,7 +96,7 @@
         <repository>
             <id>deploymentRepo</id>
             <name>Nexus Repository</name>
-            <url>http://192.168.1.20:8081/repository/maven-releases/</url>
+            <url>http://192.168.1.21:8081/repository/maven-releases/</url>
         </repository>
     </distributionManagement>
 
