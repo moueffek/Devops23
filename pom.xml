@@ -63,7 +63,7 @@
         <dependency>
             <groupId>org.testng</groupId>
             <artifactId>testng</artifactId>
-            <version>RELEASE</version>
+            <version>6.14.3</version>
             <scope>test</scope>
         </dependency>
     </dependencies>
@@ -72,7 +72,7 @@
         <repository>
             <id>deploymentRepo</id>
             <name>Nexus Repository</name>
-            <url>http://192.168.8.180:8081/repository/maven-releases/</url>
+            <url>http:// 192.168.8.181:8081/repository/maven-releases/</url>
         </repository>
     </distributionManagement>
 

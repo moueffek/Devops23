@@ -1,10 +1,10 @@
 
 o
 java:S1488#"YImmediately return this expression instead of assigning it to the temporary variable "u".(¯œ
-U
-java:S22593"?A "NullPointerException" could be thrown; "u" is nullable here.(‡ÍéŒ
 Z
 java:S2259-"?A "NullPointerException" could be thrown; "u" is nullable here.(Ñ’§øûÿÿÿÿ
+U
+java:S22593"?A "NullPointerException" could be thrown; "u" is nullable here.(‡ÍéŒ
 T
 java:S3655#"7Call "Optional#isPresent()" before accessing the value.(¯œ8ÃÓ€¬³1
 M
