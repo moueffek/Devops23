@@ -76,7 +76,6 @@
         </repository>
     </distributionManagement>
 
-
     <build>
         <plugins>
             <plugin>
@@ -96,7 +95,7 @@
                 <artifactId>maven-deploy-plugin</artifactId>
                 <version>${maven-deploy-plugin.version}</version>
                 <configuration>
-                    <skip>true</skip>
+                    <skip>false</skip>
                 </configuration>
             </plugin>
 
