@@ -1,6 +1,5 @@
 package tn.esprit.spring.kaddem.services;
 
-
 import org.junit.jupiter.api.*;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
@@ -20,77 +19,65 @@ import static org.mockito.Mockito.*;
 public class DetailEquipeServicelmplTest {
 
     @Mock
-    DetailEquipeRepository detailEquipeRepository ;
+    DetailEquipeRepository detailEquipeRepository;
+
     @Mock
     EquipeRepository equipeRepository;
 
     @InjectMocks
-    DetailEquipeServicelmpl DetailEquipeService;
+    DetailEquipeServicelmpl detailEquipeService;
 
     @Test
     @Order(1)
-    public void testRetrieveAllDetailEquipe() {
-
-         DetailEquipe detailEquipe = new DetailEquipe( 1,  "exp");
-
+    public void testRetrieveDetailEquipe() {
+        // Given
+        DetailEquipe detailEquipe = new DetailEquipe(1, "exp");
         detailEquipe.setIdDetailEquipe(1);
 
         when(detailEquipeRepository.findById(1)).thenReturn(Optional.of(detailEquipe));
 
-        DetailEquipeService.retrieveDetailEquipe(1);
-        assertNotNull(detailEquipe);
+        // When
+        DetailEquipe retrievedDetailEquipe = detailEquipeService.retrieveDetailEquipe(1);
+
+        // Then
+        assertNotNull(retrievedDetailEquipe);
+        assertEquals(detailEquipe, retrievedDetailEquipe);
     }
 
     @Test
     @Order(2)
     public void testAddDetailEquipe() {
-        DetailEquipe detailEquipeAdd = new DetailEquipe( 1,  "exp");
-        when(detailEquipeRepository.save(detailEquipeAdd)).thenReturn(detailEquipeAdd);
-        DetailEquipe addedDetailEquipe = DetailEquipeService.addDetailEquipe(detailEquipeAdd);
-        verify(detailEquipeRepository, times(1)).save(addedDetailEquipe);
+        // Given
+        DetailEquipe detailEquipeToAdd = new DetailEquipe(1, "exp");
+
+        when(detailEquipeRepository.save(detailEquipeToAdd)).thenReturn(detailEquipeToAdd);
+
+        // When
+        DetailEquipe addedDetailEquipe = detailEquipeService.addDetailEquipe(detailEquipeToAdd);
+
+        // Then
+        verify(detailEquipeRepository, times(1)).save(detailEquipeToAdd);
         assertNotNull(addedDetailEquipe);
-        assertEquals(detailEquipeAdd, addedDetailEquipe);
+        assertEquals(detailEquipeToAdd, addedDetailEquipe);
     }
+
 
     @Test
     @Order(3)
     public void testRetrieveContrat() {
-        DetailEquipe expectedDetailEquipe = new DetailEquipe( 1,  "exp");
-
+        // Given
+        DetailEquipe expectedDetailEquipe = new DetailEquipe(1, "exp");
         expectedDetailEquipe.setIdDetailEquipe(1);
 
         when(detailEquipeRepository.findById(1)).thenReturn(Optional.of(expectedDetailEquipe));
-        DetailEquipe retrieveDetailEquipe = DetailEquipeService.retrieveDetailEquipe(1);
 
+        // When
+        DetailEquipe retrieveDetailEquipe = detailEquipeService.retrieveDetailEquipe(1);
+
+        // Then
         verify(detailEquipeRepository, times(1)).findById(1);
-
         assertNotNull(retrieveDetailEquipe);
         assertEquals(expectedDetailEquipe, retrieveDetailEquipe);
     }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 }
