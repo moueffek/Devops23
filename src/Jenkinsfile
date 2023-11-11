@@ -1,16 +1,16 @@
 pipeline {
     agent any
     environment {
-        registry = "ahmedjarraya/krayapipeline:latest" // Specify image name and tag
+        registry = "benaissa007/detailequipe:latest" // Specify image name and tag
         dockerImage = ''
     }
     stages {
         stage('Git Checkout') {
             steps {
                 script {
-                    git branch: 'main',
+                    git branch: 'Medalibenaissa',
                     credentialsId: 'your-credentials-id', // Optional, if you have credentials configured
-                    url: 'https://github.com/AhmedJarraya999/5DS1-G6-KADDEM.git',
+                    url: 'https://github.com/moueffek/Devops23.git',
                     refspec: '+refs/heads/main:refs/remotes/origin/main' // Specify the refspec
                 }
             }
@@ -21,22 +21,18 @@ pipeline {
             }
         }
 
-        stage('Sonar Quality') {
-            steps {
-                echo "sonar"
-                // withSonarQubeEnv('SonarQube') {
-                //     sh "mvn sonar:sonar"
-                // }
-                //yooo
-            }
-        }
 
-        stage('MVN SONARQUBE') {
-            steps {
-                sh 'mvn sonar:sonar -Dsonar.login=admin -Dsonar.password=24149100'
-             //webhook testsss
-            }
-        }
+
+        stage('MVN Sonarqube') {
+                   steps {
+                       sh "mvn sonar:sonar -Dsonar.login=squ_1e2609a889ea41e2069ed871bbf291473a8a7af4"
+                   }
+               }
+               stage('Test project with Maven') {
+                   steps {
+                       sh 'mvn test'
+                   }
+               }
 
         stage('Deploy Artifacts') {
             steps {
@@ -54,7 +50,7 @@ pipeline {
         }
          stage("PUBLISH TO NEXUS") {
             steps {
-               sh 'mvn clean deploy'
+            echo"test Nexus" //  sh 'mvn clean deploy'
              //sh  'mvn clean deploy -Prelease'
             }
         }
@@ -74,12 +70,12 @@ pipeline {
                }
             }
         }
-        stage("kube deploy") {
-            steps {
-               script{
-                  echo("ssh to k8s node && kubectl apply -f")
-               }
-            }
-        }
+        //stage("kube deploy") {
+          //  steps {
+            //   script{
+              //    echo("ssh to k8s node && kubectl apply -f")
+               //}
+            //}
+        //}
     }
 }
