@@ -44,8 +44,8 @@ pipeline {
             steps {
                 script {
                      // Specify the build context (current workspace)
-                    dockerImage = docker.build(registry, ".")
-                }
+                    sh 'docker build -t benaissa007/detailequipe:tagname .'
+                           }
             }
         }
          stage("PUBLISH TO NEXUS") {
