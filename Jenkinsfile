@@ -50,7 +50,7 @@ pipeline {
         }
          stage("PUBLISH TO NEXUS") {
             steps {
-            echo"test Nexus" //  sh 'mvn clean deploy'
+             sh 'mvn clean deploy'
              //sh  'mvn clean deploy -Prelease'
             }
         }
