@@ -1,7 +1,7 @@
 pipeline {
     agent any
     environment {
-        registry = "benaissa007/detailequipe:tagname" // Specify image name and tag
+        registry = "benaissa007/detailequipe:latest" // Specify image name and tag
         dockerImage = ''
     }
     stages {
