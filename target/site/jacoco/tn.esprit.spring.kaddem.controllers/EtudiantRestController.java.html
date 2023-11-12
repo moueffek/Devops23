@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>EtudiantRestController.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">kaddem</a> &gt; <a href="index.source.html" class="el_package">tn.esprit.spring.kaddem.controllers</a> &gt; <span class="el_source">EtudiantRestController.java</span></div><h1>EtudiantRestController.java</h1><pre class="source lang-java linenums">package tn.esprit.spring.kaddem.controllers;
+
+import lombok.AllArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.*;
+import tn.esprit.spring.kaddem.entities.Etudiant;
+import tn.esprit.spring.kaddem.services.IEtudiantService;
+
+import java.util.List;
+
+@RestController
+<span class="nc" id="L12">@AllArgsConstructor</span>
+@RequestMapping(&quot;/etudiant&quot;)
+public class EtudiantRestController {
+	@Autowired
+	IEtudiantService etudiantService;
+	// http://localhost:8089/Kaddem/etudiant/retrieve-all-etudiants
+	@GetMapping(&quot;/retrieve-all-etudiants&quot;)
+	public List&lt;Etudiant&gt; getEtudiants() {
+<span class="nc" id="L20">		List&lt;Etudiant&gt; listEtudiants = etudiantService.retrieveAllEtudiants();</span>
+<span class="nc" id="L21">		return listEtudiants;</span>
+	}
+	// http://localhost:8089/Kaddem/etudiant/retrieve-etudiant/8
+	@GetMapping(&quot;/retrieve-etudiant/{etudiant-id}&quot;)
+	public Etudiant retrieveEtudiant(@PathVariable(&quot;etudiant-id&quot;) Integer etudiantId) {
+<span class="nc" id="L26">		return etudiantService.retrieveEtudiant(etudiantId);</span>
+	}
+
+	// http://localhost:8089/Kaddem/etudiant/add-etudiant
+	@PostMapping(&quot;/add-etudiant&quot;)
+	public Etudiant addEtudiant(@RequestBody Etudiant e) {
+<span class="nc" id="L32">		Etudiant etudiant = etudiantService.addEtudiant(e);</span>
+<span class="nc" id="L33">		return etudiant;</span>
+	}
+
+	// http://localhost:8089/Kaddem/etudiant/remove-etudiant/1
+	@DeleteMapping(&quot;/remove-etudiant/{etudiant-id}&quot;)
+	public void removeEtudiant(@PathVariable(&quot;etudiant-id&quot;) Integer etudiantId) {
+<span class="nc" id="L39">		etudiantService.removeEtudiant(etudiantId);</span>
+<span class="nc" id="L40">	}</span>
+
+	// http://localhost:8089/Kaddem/etudiant/update-etudiant
+	@PutMapping(&quot;/update-etudiant&quot;)
+	public Etudiant updateEtudiant(@RequestBody Etudiant e) {
+<span class="nc" id="L45">		Etudiant etudiant= etudiantService.updateEtudiant(e);</span>
+
+<span class="nc" id="L47">		return etudiant;</span>
+	}
+
+	//@PutMapping(&quot;/affecter-etudiant-departement&quot;)
+	@PutMapping(value=&quot;/affecter-etudiant-departement/{etudiantId}/{departementId}&quot;)
+	public void affecterEtudiantToDepartement(@PathVariable(&quot;etudiantId&quot;) Integer etudiantId, @PathVariable(&quot;departementId&quot;)Integer departementId){
+<span class="nc" id="L53">		etudiantService.assignEtudiantToDepartement(etudiantId, departementId);</span>
+<span class="nc" id="L54">    }</span>
+//addAndAssignEtudiantToEquipeAndContract(Etudiant e, Integer idContrat, Integer idEquipe)
+    /* Ajouter un étudiant tout en lui affectant un contrat et une équipe */
+    @PostMapping(&quot;/add-assign-Etudiant/{idContrat}/{idEquipe}&quot;)
+    @ResponseBody
+    public Etudiant addEtudiantWithEquipeAndContract(@RequestBody Etudiant e, @PathVariable(&quot;idContrat&quot;) Integer idContrat, @PathVariable(&quot;idEquipe&quot;) Integer idEquipe) {
+<span class="nc" id="L60">        Etudiant etudiant = etudiantService.addAndAssignEtudiantToEquipeAndContract(e,idContrat,idEquipe);</span>
+<span class="nc" id="L61">        return etudiant;</span>
+    }
+
+	@GetMapping(value = &quot;/getEtudiantsByDepartement/{idDepartement}&quot;)
+	public List&lt;Etudiant&gt; getEtudiantsParDepartement(@PathVariable(&quot;idDepartement&quot;) Integer idDepartement) {
+
+<span class="nc" id="L67">		return etudiantService.getEtudiantsByDepartement(idDepartement);</span>
+	}
+
+}
+
+
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.8.202204050719</span></div></body></html>

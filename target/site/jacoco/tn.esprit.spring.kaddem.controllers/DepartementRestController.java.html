@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>DepartementRestController.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">kaddem</a> &gt; <a href="index.source.html" class="el_package">tn.esprit.spring.kaddem.controllers</a> &gt; <span class="el_source">DepartementRestController.java</span></div><h1>DepartementRestController.java</h1><pre class="source lang-java linenums">package tn.esprit.spring.kaddem.controllers;
+
+import lombok.AllArgsConstructor;
+import org.springframework.web.bind.annotation.*;
+import tn.esprit.spring.kaddem.entities.Departement;
+import tn.esprit.spring.kaddem.services.IDepartementService;
+
+import java.util.List;
+
+@RestController
+<span class="nc" id="L11">@AllArgsConstructor</span>
+@RequestMapping(&quot;/departement&quot;)
+public class DepartementRestController {
+	IDepartementService departementService;
+	// http://localhost:8089/Kaddem/departement/retrieve-all-departements
+	@GetMapping(&quot;/retrieve-all-departements&quot;)
+	public List&lt;Departement&gt; getDepartements() {
+<span class="nc" id="L18">		List&lt;Departement&gt; listDepartements = departementService.retrieveAllDepartements();</span>
+<span class="nc" id="L19">		return listDepartements;</span>
+	}
+	// http://localhost:8089/Kaddem/departement/retrieve-departement/8
+	@GetMapping(&quot;/retrieve-departement/{departement-id}&quot;)
+	public Departement retrieveDepartement(@PathVariable(&quot;departement-id&quot;) Integer departementId) {
+<span class="nc" id="L24">		return departementService.retrieveDepartement(departementId);</span>
+	}
+
+	// http://localhost:8089/Kaddem/departement/add-departement
+	@PostMapping(&quot;/add-departement&quot;)
+	public Departement addDepartement(@RequestBody Departement d) {
+<span class="nc" id="L30">		Departement departement = departementService.addDepartement(d);</span>
+<span class="nc" id="L31">		return departement;</span>
+	}
+
+	// http://localhost:8089/Kaddem/departement/remove-departement/1
+	@DeleteMapping(&quot;/remove-departement/{departement-id}&quot;)
+	public void removeDepartement(@PathVariable(&quot;departement-id&quot;) Integer departementId) {
+<span class="nc" id="L37">		departementService.deleteDepartement(departementId);</span>
+<span class="nc" id="L38">	}</span>
+
+	// http://localhost:8089/Kaddem/departement/update-departement
+	@PutMapping(&quot;/update-departement&quot;)
+	public Departement updateDepartement(@RequestBody Departement e) {
+<span class="nc" id="L43">		Departement departement= departementService.updateDepartement(e);</span>
+<span class="nc" id="L44">		return departement;</span>
+	}
+}
+
+
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.8.202204050719</span></div></body></html>

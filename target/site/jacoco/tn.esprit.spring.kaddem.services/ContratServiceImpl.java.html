@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>ContratServiceImpl.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">kaddem</a> &gt; <a href="index.source.html" class="el_package">tn.esprit.spring.kaddem.services</a> &gt; <span class="el_source">ContratServiceImpl.java</span></div><h1>ContratServiceImpl.java</h1><pre class="source lang-java linenums">package tn.esprit.spring.kaddem.services;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import lombok.extern.slf4j.Slf4j;
+import tn.esprit.spring.kaddem.entities.Contrat;
+import tn.esprit.spring.kaddem.entities.Etudiant;
+import tn.esprit.spring.kaddem.entities.Specialite;
+import tn.esprit.spring.kaddem.repositories.ContratRepository;
+import tn.esprit.spring.kaddem.repositories.EtudiantRepository;
+
+import java.util.Date;
+import java.util.List;
+import java.util.Set;
+
+<span class="nc" id="L17">@Slf4j</span>
+@Service
+<span class="nc" id="L19">public class ContratServiceImpl implements IContratService{</span>
+@Autowired
+ContratRepository contratRepository;
+@Autowired
+	EtudiantRepository etudiantRepository;
+	public List&lt;Contrat&gt; retrieveAllContrats(){
+<span class="nc" id="L25">		return (List&lt;Contrat&gt;) contratRepository.findAll();</span>
+	}
+
+	public Contrat updateContrat (Contrat  ce){
+<span class="nc" id="L29">		return contratRepository.save(ce);</span>
+	}
+
+	public  Contrat addContrat (Contrat ce){
+<span class="nc" id="L33">		return contratRepository.save(ce);</span>
+	}
+
+	public Contrat retrieveContrat (Integer  idContrat){
+<span class="nc" id="L37">		return contratRepository.findById(idContrat).orElse(null);</span>
+	}
+
+	public  void removeContrat(Integer idContrat){
+<span class="nc" id="L41">		Contrat c=retrieveContrat(idContrat);</span>
+<span class="nc" id="L42">		contratRepository.delete(c);</span>
+<span class="nc" id="L43">	}</span>
+
+
+
+	public Contrat affectContratToEtudiant (Integer idContrat, String nomE, String prenomE){
+<span class="nc" id="L48">		Etudiant e=etudiantRepository.findByNomEAndPrenomE(nomE, prenomE);</span>
+<span class="nc" id="L49">		Contrat ce=contratRepository.findByIdContrat(idContrat);</span>
+<span class="nc" id="L50">		Set&lt;Contrat&gt; contrats= e.getContrats();</span>
+<span class="nc" id="L51">		Integer nbContratssActifs=0;</span>
+<span class="nc bnc" id="L52" title="All 2 branches missed.">		if (contrats.size()!=0) {</span>
+<span class="nc bnc" id="L53" title="All 2 branches missed.">			for (Contrat contrat : contrats) {</span>
+<span class="nc bnc" id="L54" title="All 4 branches missed.">				if (((contrat.getArchive())!=null)&amp;&amp; ((contrat.getArchive())!=false))  {</span>
+<span class="nc" id="L55">					nbContratssActifs++;</span>
+				}
+<span class="nc" id="L57">			}</span>
+		}
+<span class="nc bnc" id="L59" title="All 2 branches missed.">		if (nbContratssActifs&lt;=4){</span>
+<span class="nc" id="L60">		ce.setEtudiant(e);</span>
+<span class="nc" id="L61">		contratRepository.save(ce);}</span>
+<span class="nc" id="L62">		return ce;</span>
+	}
+	public 	Integer nbContratsValides(Date startDate, Date endDate){
+<span class="nc" id="L65">		return contratRepository.getnbContratsValides(startDate, endDate);</span>
+	}
+
+	public void retrieveAndUpdateStatusContrat(){
+<span class="nc" id="L69">		List&lt;Contrat&gt;contrats=contratRepository.findAll();</span>
+<span class="nc" id="L70">		List&lt;Contrat&gt;contrats15j=null;</span>
+<span class="nc" id="L71">		List&lt;Contrat&gt;contratsAarchiver=null;</span>
+<span class="nc bnc" id="L72" title="All 2 branches missed.">		for (Contrat contrat : contrats) {</span>
+<span class="nc" id="L73">			Date dateSysteme = new Date();</span>
+<span class="nc bnc" id="L74" title="All 2 branches missed.">			if (contrat.getArchive()==false) {</span>
+<span class="nc" id="L75">				long difference_In_Time = dateSysteme.getTime() - contrat.getDateFinContrat().getTime();</span>
+<span class="nc" id="L76">				long difference_In_Days = (difference_In_Time / (1000 * 60 * 60 * 24)) % 365;</span>
+<span class="nc bnc" id="L77" title="All 2 branches missed.">				if (difference_In_Days==15){</span>
+<span class="nc" id="L78">					contrats15j.add(contrat);</span>
+<span class="nc" id="L79">					log.info(&quot; Contrat : &quot; + contrat);</span>
+				}
+<span class="nc bnc" id="L81" title="All 2 branches missed.">				if (difference_In_Days==0) {</span>
+<span class="nc" id="L82">					contratsAarchiver.add(contrat);</span>
+<span class="nc" id="L83">					contrat.setArchive(true);</span>
+<span class="nc" id="L84">					contratRepository.save(contrat);</span>
+				}
+			}
+<span class="nc" id="L87">		}</span>
+<span class="nc" id="L88">	}</span>
+	public float getChiffreAffaireEntreDeuxDates(Date startDate, Date endDate){
+<span class="nc" id="L90">		float difference_In_Time = endDate.getTime() - startDate.getTime();</span>
+<span class="nc" id="L91">		float difference_In_Days = (difference_In_Time / (1000 * 60 * 60 * 24)) % 365;</span>
+<span class="nc" id="L92">		float difference_In_months =difference_In_Days/30;</span>
+<span class="nc" id="L93">        List&lt;Contrat&gt; contrats=contratRepository.findAll();</span>
+<span class="nc" id="L94">		float chiffreAffaireEntreDeuxDates=0;</span>
+<span class="nc bnc" id="L95" title="All 2 branches missed.">		for (Contrat contrat : contrats) {</span>
+<span class="nc bnc" id="L96" title="All 2 branches missed.">			if (contrat.getSpecialite()== Specialite.IA){</span>
+<span class="nc" id="L97">				chiffreAffaireEntreDeuxDates+=(difference_In_months*300);</span>
+<span class="nc bnc" id="L98" title="All 2 branches missed.">			} else if (contrat.getSpecialite()== Specialite.CLOUD) {</span>
+<span class="nc" id="L99">				chiffreAffaireEntreDeuxDates+=(difference_In_months*400);</span>
+			}
+<span class="nc bnc" id="L101" title="All 2 branches missed.">			else if (contrat.getSpecialite()== Specialite.RESEAUX) {</span>
+<span class="nc" id="L102">				chiffreAffaireEntreDeuxDates+=(difference_In_months*350);</span>
+			}
+			else //if (contrat.getSpecialite()== Specialite.SECURITE)
+			 {
+<span class="nc" id="L106">				 chiffreAffaireEntreDeuxDates+=(difference_In_months*450);</span>
+			}
+<span class="nc" id="L108">		}</span>
+<span class="nc" id="L109">		return chiffreAffaireEntreDeuxDates;</span>
+
+
+	}
+
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.8.202204050719</span></div></body></html>

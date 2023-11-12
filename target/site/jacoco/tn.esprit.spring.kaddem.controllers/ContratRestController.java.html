@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>ContratRestController.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">kaddem</a> &gt; <a href="index.source.html" class="el_package">tn.esprit.spring.kaddem.controllers</a> &gt; <span class="el_source">ContratRestController.java</span></div><h1>ContratRestController.java</h1><pre class="source lang-java linenums">package tn.esprit.spring.kaddem.controllers;
+
+import lombok.AllArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.format.annotation.DateTimeFormat;
+import org.springframework.scheduling.annotation.Scheduled;
+import org.springframework.web.bind.annotation.*;
+import tn.esprit.spring.kaddem.entities.Contrat;
+import tn.esprit.spring.kaddem.services.ContratServiceImpl;
+import tn.esprit.spring.kaddem.services.IContratService;
+
+import java.util.Date;
+import java.util.List;
+
+@RestController
+<span class="nc" id="L16">@AllArgsConstructor</span>
+@RequestMapping(&quot;/contrat&quot;)
+public class ContratRestController {
+	IContratService contratService;
+	// http://localhost:8089/Kaddem/contrat/retrieve-all-contrats
+	@GetMapping(&quot;/retrieve-all-contrats&quot;)
+	public List&lt;Contrat&gt; getContrats() {
+<span class="nc" id="L23">		List&lt;Contrat&gt; listContrats = contratService.retrieveAllContrats();</span>
+<span class="nc" id="L24">		return listContrats;</span>
+	}
+	// http://localhost:8089/Kaddem/contrat/retrieve-contrat/8
+	@GetMapping(&quot;/retrieve-contrat/{contrat-id}&quot;)
+	public Contrat retrieveContrat(@PathVariable(&quot;contrat-id&quot;) Integer contratId) {
+<span class="nc" id="L29">		return contratService.retrieveContrat(contratId);</span>
+	}
+
+	// http://localhost:8089/Kaddem/econtrat/add-contrat
+	@PostMapping(&quot;/add-contrat&quot;)
+	public Contrat addContrat(@RequestBody Contrat c) {
+<span class="nc" id="L35">		Contrat contrat = contratService.addContrat(c);</span>
+<span class="nc" id="L36">		return contrat;</span>
+	}
+
+	// http://localhost:8089/Kaddem/contrat/remove-contrat/1
+	@DeleteMapping(&quot;/remove-contrat/{contrat-id}&quot;)
+	public void removeContrat(@PathVariable(&quot;contrat-id&quot;) Integer contratId) {
+<span class="nc" id="L42">		contratService.removeContrat(contratId);</span>
+<span class="nc" id="L43">	}</span>
+
+	// http://localhost:8089/Kaddem/contrat/update-contrat
+	@PutMapping(&quot;/update-contrat&quot;)
+	public Contrat updateContrat(@RequestBody Contrat c) {
+<span class="nc" id="L48">		Contrat contrat= contratService.updateContrat(c);</span>
+<span class="nc" id="L49">		return contrat;</span>
+	}
+
+		/*@PutMapping(value = &quot;/assignContratToEtudiant/{ce}/{nomE}/{prenomE}&quot;)
+		public Contrat assignContratToEtudiant (Contrat ce, String nomE, String prenomE){
+		return 	(contratService.affectContratToEtudiant(ce, nomE, prenomE));
+		}*/
+
+	@PutMapping(value = &quot;/assignContratToEtudiant/{idContrat}/{nomE}/{prenomE}&quot;)
+	public Contrat assignContratToEtudiant (Integer idContrat, String nomE, String prenomE){
+	//	Contrat c= contratService.affectContratToEtudiant()
+<span class="nc" id="L60">		return 	(contratService.affectContratToEtudiant(idContrat, nomE, prenomE));</span>
+	}
+
+	//The most common ISO Date Format yyyy-MM-dd — for example, &quot;2000-10-31&quot;.
+		@GetMapping(value = &quot;/getnbContratsValides/{startDate}/{endDate}&quot;)
+		public Integer getnbContratsValides(@PathVariable(name = &quot;startDate&quot;) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) Date startDate,
+										  @PathVariable(name = &quot;endDate&quot;) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) Date endDate) {
+
+<span class="nc" id="L68">			return contratService.nbContratsValides(startDate, endDate);</span>
+		}
+
+    //Only no-arg methods may be annotated with @Scheduled
+    @Scheduled(cron=&quot;0 0 13 * * *&quot;)//(cron=&quot;0 0 13 * * ?&quot;)(fixedRate =21600)
+	@PutMapping(value = &quot;/majStatusContrat&quot;)
+	public void majStatusContrat (){
+		//return 	(contratService.affectContratToEtudiant(ce, nomE, prenomE));
+<span class="nc" id="L76">		contratService.retrieveAndUpdateStatusContrat();</span>
+
+<span class="nc" id="L78">	}</span>
+
+	//public float getChiffreAffaireEntreDeuxDate(Date startDate, Date endDate)
+
+	@GetMapping(&quot;/calculChiffreAffaireEntreDeuxDate/{startDate}/{endDate}&quot;)
+	@ResponseBody
+	public float calculChiffreAffaireEntreDeuxDates(@PathVariable(name = &quot;startDate&quot;) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) Date startDate,
+	@PathVariable(name = &quot;endDate&quot;) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) Date endDate) {
+
+<span class="nc" id="L87">		return contratService.getChiffreAffaireEntreDeuxDates(startDate, endDate);</span>
+	}
+}
+
+
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.8.202204050719</span></div></body></html>

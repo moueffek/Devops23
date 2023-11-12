@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>DetailEquipe.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">kaddem</a> &gt; <a href="index.source.html" class="el_package">tn.esprit.spring.kaddem.entities</a> &gt; <span class="el_source">DetailEquipe.java</span></div><h1>DetailEquipe.java</h1><pre class="source lang-java linenums">package tn.esprit.spring.kaddem.entities;
+
+import java.io.Serializable;
+
+import javax.persistence.*;
+
+@Entity
+public class DetailEquipe implements Serializable{
+    @Id
+    @GeneratedValue(strategy= GenerationType.IDENTITY)
+    private Integer idDetailEquipe;
+    private Integer salle;
+    private String thematique;
+    @OneToOne(mappedBy=&quot;detailEquipe&quot;)
+    private Equipe equipe;
+<span class="nc" id="L16">    public DetailEquipe() {</span>
+        // TODO Auto-generated constructor stub
+<span class="nc" id="L18">    }</span>
+
+    public DetailEquipe(Integer salle, String thematique) {
+<span class="nc" id="L21">        super();</span>
+<span class="nc" id="L22">        this.salle = salle;</span>
+<span class="nc" id="L23">        this.thematique = thematique;</span>
+<span class="nc" id="L24">    }</span>
+
+    public DetailEquipe(Integer idDetailEquipe, Integer salle, String thematique) {
+<span class="nc" id="L27">        super();</span>
+<span class="nc" id="L28">        this.idDetailEquipe = idDetailEquipe;</span>
+<span class="nc" id="L29">        this.salle = salle;</span>
+<span class="nc" id="L30">        this.thematique = thematique;</span>
+<span class="nc" id="L31">    }</span>
+
+    public Equipe getEquipe() {
+<span class="nc" id="L34">        return equipe;</span>
+    }
+
+    public void setEquipe(Equipe equipe) {
+<span class="nc" id="L38">        this.equipe = equipe;</span>
+<span class="nc" id="L39">    }</span>
+
+    public Integer getIdDetailEquipe() {
+<span class="nc" id="L42">        return idDetailEquipe;</span>
+    }
+    public void setIdDetailEquipe(Integer idDetailEquipe) {
+<span class="nc" id="L45">        this.idDetailEquipe = idDetailEquipe;</span>
+<span class="nc" id="L46">    }</span>
+    public Integer getSalle() {
+<span class="nc" id="L48">        return salle;</span>
+    }
+    public void setSalle(Integer salle) {
+<span class="nc" id="L51">        this.salle = salle;</span>
+<span class="nc" id="L52">    }</span>
+    public String getThematique() {
+<span class="nc" id="L54">        return thematique;</span>
+    }
+    public void setThematique(String thematique) {
+<span class="nc" id="L57">        this.thematique = thematique;</span>
+<span class="nc" id="L58">    }</span>
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.8.202204050719</span></div></body></html>

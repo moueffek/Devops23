@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>UniversiteServiceImpl.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">kaddem</a> &gt; <a href="index.source.html" class="el_package">tn.esprit.spring.kaddem.services</a> &gt; <span class="el_source">UniversiteServiceImpl.java</span></div><h1>UniversiteServiceImpl.java</h1><pre class="source lang-java linenums">package tn.esprit.spring.kaddem.services;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+import tn.esprit.spring.kaddem.entities.Departement;
+import tn.esprit.spring.kaddem.entities.Universite;
+import tn.esprit.spring.kaddem.repositories.DepartementRepository;
+import tn.esprit.spring.kaddem.repositories.UniversiteRepository;
+
+import java.util.List;
+import java.util.Set;
+
+@Service
+public class UniversiteServiceImpl implements IUniversiteService{
+@Autowired
+    UniversiteRepository universiteRepository;
+@Autowired
+    DepartementRepository departementRepository;
+<span class="nc" id="L19">    public UniversiteServiceImpl() {</span>
+        // TODO Auto-generated constructor stub
+<span class="nc" id="L21">    }</span>
+  public   List&lt;Universite&gt; retrieveAllUniversites(){
+<span class="nc" id="L23">return (List&lt;Universite&gt;) universiteRepository.findAll();</span>
+    }
+
+ public    Universite addUniversite (Universite  u){
+<span class="nc" id="L27">return  (universiteRepository.save(u));</span>
+    }
+
+ public    Universite updateUniversite (Universite  u){
+<span class="nc" id="L31">     return  (universiteRepository.save(u));</span>
+    }
+
+  public Universite retrieveUniversite (Integer idUniversite){
+<span class="nc" id="L35">Universite u = universiteRepository.findById(idUniversite).get();</span>
+<span class="nc" id="L36">return  u;</span>
+    }
+    public  void deleteUniversite(Integer idUniversite){
+<span class="nc" id="L39">        universiteRepository.delete(retrieveUniversite(idUniversite));</span>
+<span class="nc" id="L40">    }</span>
+
+    public void assignUniversiteToDepartement(Integer idUniversite, Integer idDepartement){
+<span class="nc" id="L43">        Universite u= universiteRepository.findById(idUniversite).orElse(null);</span>
+<span class="nc" id="L44">        Departement d= departementRepository.findById(idDepartement).orElse(null);</span>
+<span class="nc" id="L45">        u.getDepartements().add(d);</span>
+<span class="nc" id="L46">        universiteRepository.save(u);</span>
+<span class="nc" id="L47">    }</span>
+
+    public Set&lt;Departement&gt; retrieveDepartementsByUniversite(Integer idUniversite){
+<span class="nc" id="L50">Universite u=universiteRepository.findById(idUniversite).orElse(null);</span>
+<span class="nc" id="L51">return u.getDepartements();</span>
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.8.202204050719</span></div></body></html>
