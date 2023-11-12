@@ -1,7 +1,7 @@
 pipeline {
     agent any
     environment {
-        registry = "benaissa007/detailequipe:latest" // Specify image name and tag
+        registry = "benaissa007/detailequipe:tagname" // Specify image name and tag
         dockerImage = ''
     }
     stages {
@@ -43,8 +43,7 @@ pipeline {
         stage('Building Image') {
             steps {
                 script {
-                    echo "Building Docker image with registry: ${registry}, context: ."
-                    // Specify the build context (current workspace)
+                     // Specify the build context (current workspace)
                     dockerImage = docker.build(registry, ".")
                 }
             }
