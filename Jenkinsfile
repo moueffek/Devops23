@@ -54,15 +54,16 @@ pipeline {
              //sh  'mvn clean deploy -Prelease'
             }
         }
-        stage('Pushing Image') {
-            steps {
-                script {
-                    docker.withRegistry('https://index.docker.io/v1/', 'dockerhub-credentials') {
-                        dockerImage.push()
-                    }
-                }
-            }
-        }
+          stage('Docker Login and Push') {
+                   steps {
+                       script {
+                               sh 'docker login -u benaissa007 -p elhamma29297529'
+                               echo 'login done'
+                               sh 'docker push benaissa007/detailequipe:tagname'
+                           }
+                   }
+               }
+
          stage("DOCKER-COMPOSE UP") {
             steps {
                script{
