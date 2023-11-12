@@ -43,6 +43,7 @@ pipeline {
         stage('Building Image') {
             steps {
                 script {
+                    echo "Building Docker image with registry: ${registry}, context: ."
                     // Specify the build context (current workspace)
                     dockerImage = docker.build(registry, ".")
                 }
