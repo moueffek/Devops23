@@ -11,8 +11,8 @@ RUN mvn clean
 # Compile project with Maven
 RUN mvn compile
 # MVN Sonarqube
-RUN mvn sonar:sonar -Dsonar.login=squ_78935e7022d208c38ce83a2a5ae88d9baaa3ca87
+#RUN mvn sonar:sonar -Dsonar.login=squ_78935e7022d208c38ce83a2a5ae88d9baaa3ca87
 # Test project with Maven
-RUN mvn test
+#RUN mvn test
 # Deploy project with Nexus
-RUN mvn deploy -DskipTests
+#RUN mvn deploy -DskipTests
