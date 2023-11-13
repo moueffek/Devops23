@@ -96,10 +96,10 @@
                 <artifactId>maven-deploy-plugin</artifactId>
                 <version>${maven-deploy-plugin.version}</version>
                 <configuration>
-                    <skip>false</skip>
+                    <skip>true</skip>
                     <updateReleaseInfo>true</updateReleaseInfo>
                     <retryFailedDeploymentCount>1</retryFailedDeploymentCount>
-                    <version>1.0.1</version>
+                    <version>1.0.0</version>
                 </configuration>
             </plugin>
 
