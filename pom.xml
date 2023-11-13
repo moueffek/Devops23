@@ -10,7 +10,7 @@
     </parent>
     <groupId>tn.esprit.spring</groupId>
     <artifactId>kaddem</artifactId>
-    <version>0.0.1-SNAPSHOT</version>
+    <version>1.0.1</version>
     <name>kaddem</name>
     <description>kaddem</description>
     <properties>
@@ -21,6 +21,7 @@
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-data-jpa</artifactId>
         </dependency>
+
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-web</artifactId>
@@ -69,6 +70,18 @@
 
     <build>
         <plugins>
+
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-deploy-plugin</artifactId>
+                <version>${maven-deploy-plugin.version}</version>
+                <configuration>
+                    <skip>true</skip>
+                    <updateReleaseInfo>true</updateReleaseInfo>
+                    <retryFailedDeploymentCount>1</retryFailedDeploymentCount>
+                    <version>1.0.0</version>
+                </configuration>
+            </plugin>
             <plugin>
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
@@ -104,10 +117,12 @@
     </build>
     <distributionManagement>
         <repository>
+
             <id>deploymentRepo</id>
             <name>Nexus Repository</name>
             <url>http://192.168.1.22:8081/repository/maven-releases/</url>
         </repository>
+
     </distributionManagement>
 
 
