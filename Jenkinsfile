@@ -25,7 +25,7 @@ pipeline {
 
         stage('MVN Sonarqube') {
                    steps {
-                       sh "mvn sonar:sonar -Dsonar.login=squ_106811aa57f3acf4baac01772e2aaf630c9618ef"
+                       sh "mvn sonar:sonar -Dsonar.login=squ_6f3ab62a9e5d6001d7ccf12ecbfed59af7a0b6f9"
                    }
                }
                stage('Test project with Maven') {
