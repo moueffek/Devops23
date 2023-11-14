@@ -11,6 +11,7 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.boot.test.context.SpringBootTest;
 import tn.esprit.spring.kaddem.entities.Departement;
 import tn.esprit.spring.kaddem.entities.Universite;
+import tn.esprit.spring.kaddem.repositories.DepartementRepository;
 import tn.esprit.spring.kaddem.repositories.UniversiteRepository;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -20,6 +21,7 @@ import static org.mockito.Mockito.*;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.Set;
 
 @SpringBootTest
 @ExtendWith(MockitoExtension.class)
@@ -31,6 +33,8 @@ public class UniversiteServiceImplTest {
     @InjectMocks
     private UniversiteServiceImpl universiteService;
 
+    @Mock
+    DepartementRepository departementRepository;
 
 
   // @Test
@@ -116,6 +120,43 @@ public class UniversiteServiceImplTest {
         System.out.println("University updated succefully...!!");
     }
 
+
+
+
+    @Test
+    public void testAssignUniversiteToDepartementTest() {
+        Universite universite = new Universite(1, "univdep");
+        Departement departement = new Departement(2, "Informatique");
+
+        when(universiteRepository.findById(1)).thenReturn(Optional.of(universite));
+        when(departementRepository.findById(2)).thenReturn(Optional.of(departement));
+
+        universiteService.assignUniversiteToDepartement(1, 2);
+
+        verify(universiteRepository).save(universite);
+        assertEquals(1, universite.getDepartements().size());
+    }
+
+    @Test
+    public void RetrieveDepartementsByUniversiteTest() {
+
+        Universite universite = new Universite(1, "univdep");
+
+        Departement departement1 = new Departement(2, "Info");
+        Departement departement2 = new Departement(3, "Tech");
+
+        universite.getDepartements().add(departement1);
+        universite.getDepartements().add(departement2);
+
+        when(universiteRepository.findById(1)).thenReturn(Optional.of(universite));
+
+        when(departementRepository.findAll()).thenReturn(Set.of(departement1, departement2));
+
+        Set<Departement> retrievedDepartements = universiteService.retrieveDepartementsByUniversite(1);
+
+        assertEquals(2, retrievedDepartements.size());
+
+    }
 
 
 }
