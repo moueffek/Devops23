@@ -1,4 +1,4 @@
 -------------------------------------------------------------------------------
 Test set: tn.esprit.spring.kaddem.services.EquipeServicelmplTest
 -------------------------------------------------------------------------------
-Tests run: 0, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.464 s - in tn.esprit.spring.kaddem.services.EquipeServicelmplTest
+Tests run: 0, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.392 s - in tn.esprit.spring.kaddem.services.EquipeServicelmplTest
