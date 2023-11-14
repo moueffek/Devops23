@@ -1,0 +1,87 @@
+pipeline {
+
+    environment {
+        registry = "eyarahmani/kaddem"
+        registryCredential = 'dockerhub_id'
+        dockerImage = ''
+    }
+    agent any
+    stages {
+        stage('Code retrieval') {
+            steps {
+                echo 'pulling...'
+                checkout([$class: 'GitSCM',
+                          branches: [[name: 'feat/initiation_kaddem_devops_project']],
+                          doGenerateSubmoduleConfigurations: false,
+                          extensions: [],
+                          submoduleCfg: [],
+                          userRemoteConfigs: [[url: 'https://github.com/moueffek/Devops23.git']]])
+            }
+        }
+
+        stage('Clean project with Maven') {
+            steps {
+                sh 'mvn clean'
+
+            }
+        }
+
+        stage('Compile project with Maven') {
+            steps {
+                sh 'mvn compile'
+            }
+        }
+
+        stage('MVN Sonarqube') {
+            steps {
+                sh "mvn sonar:sonar -Dsonar.login=squ_78935e7022d208c38ce83a2a5ae88d9baaa3ca87"
+            }
+        }
+
+        stage('Test project with Maven') {
+            steps {
+                sh 'mvn test'
+            }
+        }
+        stage('Deploy project with Nexus') {
+            steps {
+                sh 'mvn deploy -DskipTests'
+            }
+        }
+        stage('Building our image') {
+            steps {
+                script {
+                    dockerImage = docker.build registry + ":$BUILD_NUMBER"
+                }
+            }
+        }
+        stage('Deploy our image') {
+            steps {
+                script {
+                    docker.withRegistry( '', registryCredential ) {
+                        dockerImage.push()
+                    }
+                }
+            }
+        }
+        stage('Cleaning up') {
+            steps {
+                sh "docker rmi $registry:$BUILD_NUMBER"
+            }
+        }
+         stage('Prometheus & Grafana') {
+            steps {
+                script {
+                   sh 'docker start prometheus'
+                   sh 'docker start grafana'
+                }
+            }
+        }
+        stage('Email Notification') {
+            steps {
+                emailext body: 'Pip Went Successful ! ', subject: 'Nouveau commit sur GitHub', to: 'zeineb.rahmani@esprit.tn'
+            }
+        }
+
+    }
+}
