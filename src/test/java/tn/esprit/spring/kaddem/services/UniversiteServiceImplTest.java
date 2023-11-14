@@ -37,7 +37,7 @@ public class UniversiteServiceImplTest {
     DepartementRepository departementRepository;
 
 
-  // @Test
+   @Test
   //  @Order(1)
    public void testRetrieveUniversiteTest() {
 
@@ -54,7 +54,7 @@ public class UniversiteServiceImplTest {
     }
 
    // @Order(2)
-   // @Test
+    @Test
     public void testAddUniversite() {
         Universite universiteToAdd = new Universite("esprit1");
         when(universiteRepository.save(universiteToAdd)).thenReturn(universiteToAdd);
@@ -84,7 +84,7 @@ public class UniversiteServiceImplTest {
 */
 
  //   @Order(3)
-   // @Test
+ @Test
     public void testRetrieveAllUniversiteTest()
     {
         List<Universite> Universitelist = new ArrayList<Universite>() {
@@ -102,7 +102,7 @@ public class UniversiteServiceImplTest {
         System.out.println("All Universities Retrieve processed succefully...!!");
     }
 
-   // @Test
+    @Test
     //@Order(4)
     public void testUpdateUniversite() {
 
@@ -123,7 +123,7 @@ public class UniversiteServiceImplTest {
 
 
 
-  //  @Test
+   @Test
     public void testAssignUniversiteToDepartementTest() {
         Universite universite = new Universite(1, "univdep");
         Departement departement = new Departement(2, "Informatique");
@@ -137,7 +137,7 @@ public class UniversiteServiceImplTest {
         assertEquals(1, universite.getDepartements().size());
     }
 
-    //@Test
+    @Test
     public void RetrieveDepartementsByUniversiteTest() {
 
         Universite universite = new Universite(1, "univdep");
