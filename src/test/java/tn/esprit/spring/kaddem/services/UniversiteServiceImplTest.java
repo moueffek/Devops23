@@ -18,10 +18,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.mockito.Mockito.*;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
-import java.util.Set;
+import java.util.*;
 
 @SpringBootTest
 @ExtendWith(MockitoExtension.class)
@@ -87,18 +84,18 @@ public class UniversiteServiceImplTest {
  @Test
     public void testRetrieveAllUniversiteTest()
     {
-        List<Universite> Universitelist = new ArrayList<Universite>() {
 
-            {
-                add(new Universite(2, "Université2"));
-                add(new Universite(3, "Université3"));
-                add(new Universite(4, "Université4"));
-                add(new Universite(5, "Université5"));
+        Universite university1 = new Universite("University 1");
+        Universite university2 = new Universite("University 2");
+        Universite university3 = new Universite("University 3");
 
-            }};
-        when(universiteService.retrieveAllUniversites()).thenReturn(Universitelist);
-        List<Universite> universitelist = universiteService.retrieveAllUniversites();
-        assertEquals(4, universitelist.size());
+        when(universiteRepository.findAll()).thenReturn(Arrays.asList(university1, university2, university3));
+
+        List<Universite> allUniversities = universiteService.retrieveAllUniversites();
+
+        Assertions.assertFalse(allUniversities.isEmpty());
+
+        Assertions.assertEquals(3, allUniversities.size());
         System.out.println("All Universities Retrieve processed succefully...!!");
     }
 
