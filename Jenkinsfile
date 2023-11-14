@@ -7,9 +7,8 @@ pipeline {
                 script {
                     // Checkout the Git repository
                     git branch: 'Salma',
-                    
-                    url: 'https://github.com/moueffek/Devops23.git',
-                        credentialsId: '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',
+                     credentialsId: 'Github 
+                     url: 'https://github.com/moueffek/Devops23.git'
                 }
             }
         }
