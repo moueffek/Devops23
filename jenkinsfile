@@ -64,11 +64,20 @@ pipeline {
                 }
             }
         }
-        stage('Cleaning up') {
+      /*  stage('Cleaning up') {
             steps {
                 sh "docker rmi $registry:$BUILD_NUMBER"
             }
-        }
+        }*/
+            stage('Run Docker Compose') {
+                steps {
+                 script {
+                    sh 'docker-compose pull'
+                    sh 'docker compose up -d'
+                    }
+                }
+            }
+
          stage('Prometheus & Grafana') {
             steps {
                 script {
@@ -77,6 +86,19 @@ pipeline {
                 }
             }
         }
+        stage('Alerts & Email Notification') {
+             steps {
+                 script {
+                  def alerts = sh(script: 'curl -s http://prometheus:9090/api/v1/alerts', returnStdout: true).trim()
+                    if (alerts) {
+                        emailext body: "Prometheus Alerts:\n\n${alerts}", subject: 'Prometheus Alerts', to: 'zeineb.rahmani@esprit.tn'
+                    } else {
+                        echo 'No active alerts.'
+                    }
+                }
+            }
+        }
+
         stage('Email Notification') {
             steps {
                 emailext body: 'Pip Went Successful ! ', subject: 'Nouveau commit sur GitHub', to: 'zeineb.rahmani@esprit.tn'

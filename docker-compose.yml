@@ -14,7 +14,7 @@ services:
       - db:/var/lib/mysql
   app:
     container_name: kaddem
-    image: eyarahmani/kaddem:1.0.1
+    image: eyarahmani/kaddem
     restart: on-failure
     environment:
       SPRING_APPLICATION_JSON: '{
