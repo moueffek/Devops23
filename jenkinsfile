@@ -1,6 +1,7 @@
 pipeline {
 
     environment {
+        RELEASE_VERSION = '1.0.2'
         registry = "eyarahmani/kaddem"
         registryCredential = 'dockerhub_id'
         dockerImage = ''
@@ -89,7 +90,10 @@ pipeline {
         stage('Alerts & Email Notification') {
              steps {
                  script {
+             // Check for active alerts using Prometheus API
                   def alerts = sh(script: 'curl -s http://prometheus:9090/api/v1/alerts', returnStdout: true).trim()
+
+            // Send email if there are active alerts
                     if (alerts) {
                         emailext body: "Prometheus Alerts:\n\n${alerts}", subject: 'Prometheus Alerts', to: 'zeineb.rahmani@esprit.tn'
                     } else {
