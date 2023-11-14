@@ -1,7 +1,6 @@
 FROM openjdk:11
 EXPOSE 8089
 
-# Download the JAR file from the specified URL and rename it to kaddem-1.0.1.jar
-RUN curl -o kaddem-1.0.3.jar -L "http://192.168.1.22:8081/repository/maven-releases/tn/esprit/spring/kaddem/1.0.3/kaddem-1.0.3.jar"
+RUN curl -o kaddem-1.0.3.jar -L "http://192.168.1.21:8081/repository/maven-releases/tn/esprit/spring/kaddem/1.0.3/kaddem-1.0.3.jar"
 
 ENTRYPOINT ["java", "-jar", "kaddem-1.0.3.jar"]
