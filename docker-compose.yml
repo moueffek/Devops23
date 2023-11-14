@@ -1,0 +1,25 @@
+version: "3.8"
+services:
+  mysqldb:
+    image: mysql:5.7
+    restart: unless-stopped
+    environment:
+      MYSQL_ALLOW_EMPTY_PASSWORD: "yes"
+    ports:
+      - "3307:3306"
+    volumes:
+      - db:/var/lib/mysql
+
+  kaddemProject:
+    depends_on:
+      - mysqldb
+    image:  salmachaieb/alpine1.0.0
+    environment:
+      MYSQL_ROOT_PASSWORD: ""
+    ports:
+      - "8089:8089"
+    stdin_open: true
+    tty: true
+
+volumes:
+  db:
