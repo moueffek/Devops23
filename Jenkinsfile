@@ -47,5 +47,12 @@ pipeline {
         }
     
 }
+     stage("Docker Compose") {
+        steps {
+                // Push the Docker image to a Docker registry (e.g., Docker Hub)
+                sh 'docker-compose up -d'
+        }
+    
+}   
 }
 }
