@@ -27,22 +27,24 @@ pipeline {
         sh "mvn deploy -Durl=http://192.168.1.5/repository/maven-releases/ -Drepository.username=admin -Drepository.password=admin -Dmaven.test.skip"
              }
     }
-    stage("Docker Build and Run") {
+    stage("Docker Build") {
             steps {
                 // Build the Docker image
                 sh 'docker build -t salmachaieb/alpine1.0.0 .'
                     sh "docker login -u salmachaieb -p Salma9201"
-
+            }
+    }
+   stage("Docker Run") {
+        steps {
                 // Run the Docker container in detached mode (-d)
                 sh 'docker run -d -p 8089:8089 salmachaieb/alpine1.0.0'
-
+   }
+}
+   stage("Docker Push") {
+        steps {
                 // Push the Docker image to a Docker registry (e.g., Docker Hub)
                 sh 'docker push salmachaieb/alpine1.0.0'
-
-                // Optionally, if you have a docker-compose.yml file,
-//you can use docker-compose to start your services
-                sh 'docker-compose up -d'
-            }
+        }
     
 }
 }
