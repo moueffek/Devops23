@@ -6,9 +6,9 @@ pipeline {
             steps {
                 script {
                     // Checkout the Git repository
-                    git branch: 'Salma',
-                    credentialsId: 'GitHub',
-                    url: 'https://github.com/moueffek/Devops23.git'
+                    git branch: 'Salma', credentialsId: 'Github', url: 'https://github.com/moueffek/Devops23.git'
                 }
             }
         }
+    }
+}
