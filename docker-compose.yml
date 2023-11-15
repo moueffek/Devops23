@@ -1,0 +1,34 @@
+version: "3.9"
+
+services:
+  mysqldb:
+    container_name: mysqldb${RELEASE_VERSION}
+    image: mysql:5.7.8
+    environment:
+      MYSQL_ALLOW_EMPTY_PASSWORD: yes
+      MYSQL_DATABASE: kaddemdb
+    ports:
+      - "3306:3306"
+
+    volumes:
+      - db:/var/lib/mysql
+  app:
+    container_name: kaddem${RELEASE_VERSION}
+    image: maryembm/kaddem_img2:${RELEASE_VERSION}
+    restart: on-failure
+    environment:
+      SPRING_APPLICATION_JSON: '{
+      "spring.datasource.url" : "jdbc:mysql://localhost:3306/kaddemdb?&createDatabaseIfNotExist=true&useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC",
+      "spring.datasource.username" : "root",
+      "spring.jpa.properties.hibernate.dialect" : "org.hibernate.dialect.MySQL5InnoDBDialect",
+      "spring.jpa.hibernate.ddl-auto" : "update"
+      }'
+    ports:
+      - "8089:8089"
+    depends_on:
+      - mysqldb
+    volumes:
+      - app_data:/app/data
+volumes:
+  app_data:
+  db:
