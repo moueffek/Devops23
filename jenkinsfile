@@ -1,7 +1,7 @@
 pipeline {
 
     environment {
-        RELEASE_VERSION = '1.0.5'
+        RELEASE_VERSION = '1.0.6'
         registry = "eyarahmani/kaddem"
         registryCredential = 'dockerhub_id'
         dockerImage = ''
