@@ -91,7 +91,7 @@ pipeline {
         stage('Alerts & Email Notification') {
              steps {
                  script {
-                  def alerts = sh(script: 'curl -s http://192.168.1.22:9090/api/v1/alerts', returnStdout: true).trim()
+                  def alerts = sh(script: 'curl -s http://192.168.1.23:9090/api/v1/alerts', returnStdout: true).trim()
 
                     if (alerts) {
                         emailext body: "Prometheus Alerts:\n\n${alerts}", subject: 'Prometheus Alerts', to: 'zeineb.rahmani@esprit.tn'
