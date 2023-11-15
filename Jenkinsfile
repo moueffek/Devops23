@@ -40,10 +40,10 @@ pipeline {
                 sh 'docker push salmachaieb/alpine1.0.0'
 
                 // Optionally, if you have a docker-compose.yml file,
-you can use docker-compose to start your services
+//you can use docker-compose to start your services
                 sh 'docker-compose up -d'
             }
     
-    
-    }
+}
+}
 }
