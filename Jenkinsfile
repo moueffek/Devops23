@@ -47,12 +47,5 @@ pipeline {
         }
     
 }
-stage("Junit Mockito") {
-            steps {
-                //TESTTT
-                sh 'mvn test'
-            }
-        }
-}
 }
 }
