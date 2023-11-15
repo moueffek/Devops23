@@ -1,35 +1,23 @@
-version: "3.8"
-
+version: '3.3'
 services:
-  mysqldb:
-    image: mysql:5.7
+  db:
+    container_name: db
+    image: mysql:8
     restart: unless-stopped
     environment:
       MYSQL_ROOT_PASSWORD: root
-      MYSQL_DATABASE: kaddem
-      MYSQL_ALLOW_EMPTY_PASSWORD: "yes"
-    ports:
-      - 3306:3306
     volumes:
-      - db:/var/lib/mysql
-
-  kaddem-backend:
-    depends_on:
-      - mysqldb
-    build: ./
+      - /home/mysql/data:/var/lib/mysql
+  spring_app:
+    build:
+      context: .
+      dockerfile: ./Dockerfile
+      args:
+        - IMAGE_NAME=benaissa007/detailequipe
+    container_name: back
     restart: on-failure
     ports:
-      - 8082:8082
-    stdin_open: true
-    tty: true
-    environment:
-      SPRING_APPLICATION_JSON: '{
-        "spring.datasource.url"  : "jdbc:mysql://mysqldb:3306/kaddem?useSSL=false&createDatabaseIfNotExist=true",
-        "spring.datasource.username" : "root",
-        "spring.datasource.password" : "root", 
-        "spring.jpa.properties.hibernate.dialect" : "org.hibernate.dialect.MySQL5InnoDBDialect",
-        "spring.jpa.hibernate.ddl-auto" : "update"
-      }'
-
-volumes:
-  db:
+      - 9091:9091
+    depends_on:
+      - db
+    command: sh -c "docker push benaissa007/detailequipe"
