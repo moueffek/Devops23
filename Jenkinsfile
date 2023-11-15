@@ -10,11 +10,11 @@ pipeline {
                 }
             }
         }
-        stage("Build Artifact") {
-            steps {
-                // Build your Maven project, skipping tests
-                sh 'mvn package -DskipTests'
-            }
-        }
+         stage("Nexus"){
+           steps{
+        sh "mvn deploy
+            -Durl=http://192.168.100.21/repository/maven-releases/-Drepository.username=admin -Drepository.password=admin-Dmaven.test.skip"
+             }
+    }
     }
 }
