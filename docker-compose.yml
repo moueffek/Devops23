@@ -9,7 +9,6 @@ services:
       MYSQL_DATABASE: kaddemdb
     ports:
       - "3306:3306"
-
     volumes:
       - db:/var/lib/mysql
   app:
