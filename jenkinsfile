@@ -1,0 +1,98 @@
+pipeline {
+    environment {
+        registry = "maryembm/kaddem_img2"
+        registryCredential = 'dockerhub_id'
+        RELEASE_VERSION = '1.0.1'
+        dockerImage = ''
+
+    }
+
+    agent any
+
+    stages {
+        stage('Récuperation du code de projet') {
+            steps {
+                echo 'pulling...'
+                checkout([$class: 'GitSCM',
+                          branches: [[name: 'Maryem']],
+                          doGenerateSubmoduleConfigurations: false,
+                          extensions: [],
+                          submoduleCfg: [],
+                          userRemoteConfigs: [[url: 'https://github.com/moueffek/Devops23.git']]])
+            }
+        }
+
+        stage('Nettoyage du projet avec Maven') {
+            steps {
+                sh 'mvn clean'
+            }
+        }
+
+        stage('Compilation du projet avec Maven') {
+            steps {
+                sh 'mvn compile'
+            }
+        }
+
+        stage('MVN SONARQUBE') {
+            steps {
+                sh "mvn sonar:sonar -Dsonar.login=squ_22c3e6eead0901a977b23e0882769a71da01db74"
+            }
+        }
+
+        stage('MVN junit test') {
+            steps {
+                sh "mvn test"
+            }
+        }
+
+        stage('MVN deploy nexus') {
+            steps {
+                sh "mvn deploy -DskipTests"
+            }
+        }
+
+        stage('Building the img') {
+            steps {
+                script {
+                    dockerImage = docker.build "${registry}:${RELEASE_VERSION}"
+                }
+            }
+        }
+
+        stage('img app deploy') {
+            steps {
+                script {
+                    docker.withRegistry( '', registryCredential ) {
+                        dockerImage.push()
+                    }
+                }
+            }
+        }
+
+         stage('Docker Compose pull') {
+                steps {
+                 script {
+                    sh 'docker compose pull'
+                    }
+                }
+            }
+
+         stage('Docker Compose up') {
+                steps {
+                 script {
+                    sh 'docker compose up -d'
+                    }
+                }
+            }
+       stage('Grafana') {
+            steps {
+                script {
+                   sh 'docker start prometheus'
+                   sh 'docker start grafana'
+                }
+            }
+        }
+
+}
+}
