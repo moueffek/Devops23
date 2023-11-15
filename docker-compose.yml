@@ -2,7 +2,7 @@ version: "3.9"
 
 services:
   mysqldb:
-    container_name: mysqldb:${RELEASE_VERSION}
+    container_name: mysqldb${RELEASE_VERSION}
     image: mysql:5.7.8
     environment:
       MYSQL_ALLOW_EMPTY_PASSWORD: yes
@@ -13,7 +13,7 @@ services:
     volumes:
       - db:/var/lib/mysql
   app:
-    container_name: kaddem:${RELEASE_VERSION}
+    container_name: kaddem${RELEASE_VERSION}
     image: eyarahmani/kaddem:${RELEASE_VERSION}
     restart: on-failure
     environment:
