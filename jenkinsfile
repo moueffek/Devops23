@@ -1,7 +1,7 @@
 pipeline {
 
     environment {
-        RELEASE_VERSION = '1.0.7'
+        RELEASE_VERSION = '1.0.8'
         registry = "eyarahmani/kaddem"
         registryCredential = 'dockerhub_id'
         dockerImage = ''
@@ -65,15 +65,21 @@ pipeline {
                 }
             }
         }
-            stage('Run Docker Compose') {
-                steps {
+        stage('Pull Docker Compose Images') {
+            steps {
                  script {
                     sh 'docker compose pull'
-                    sh 'docker compose up -d'
-                    }
                 }
             }
+        }
 
+        stage('Run Docker Compose') {
+            steps {
+                script {
+                    sh 'docker compose up -d'
+                }
+            }
+        }
          stage('Prometheus & Grafana') {
             steps {
                 script {
@@ -85,7 +91,7 @@ pipeline {
         stage('Alerts & Email Notification') {
              steps {
                  script {
-                  def alerts = sh(script: 'curl -s http://prometheus:9090/api/v1/alerts', returnStdout: true).trim()
+                  def alerts = sh(script: 'curl -s http://192.168.1.21:9090/api/v1/alerts', returnStdout: true).trim()
 
                     if (alerts) {
                         emailext body: "Prometheus Alerts:\n\n${alerts}", subject: 'Prometheus Alerts', to: 'zeineb.rahmani@esprit.tn'
